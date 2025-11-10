@@ -1,0 +1,21 @@
+<!-- ~/automation/fullstack_ztp/templates/ztp/edit_host.html -->
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Edit Host file record{% endblock title %}
+
+{% block content %}
+
+  <div class="container mt-5">
+    <h4>Edit Host File Record</h4>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button class="btn btn-warning" type="submit">
+        Update Host file record
+      </button>
+    </form>
+  </div>
+
+{% endblock content %}

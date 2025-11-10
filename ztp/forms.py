@@ -23,5 +23,5 @@ class HostForm(forms.Form): # NEW
                                         ('fortigate', 'Fortigate')])
     model = forms.CharField()
     device_username = forms.CharField()
-    device_password = forms.PasswordInput()
+    device_password = forms.CharField(widget=forms.PasswordInput())
     auth_type = forms.ChoiceField(choices=[('local', 'Local'),])

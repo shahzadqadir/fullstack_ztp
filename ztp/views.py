@@ -8,7 +8,7 @@ from . import models
 
 # Create your views here.
 
-from .forms import SCPServerForm, DHCPServerForm    # New import DHCPServerForm
+from .forms import SCPServerForm, DHCPServerForm, HostForm    # New import HostForm
 
 
 def create_scp_server_view(request):
@@ -70,3 +70,41 @@ def delete_dhcp_server_view(request, id):
     obj = models.DHCPServer.objects.get(id=id)
     obj.delete()
     return redirect(reverse('list_dhcp_servers'))
+
+
+def create_host_view(request):  # NEW
+    form = HostForm()
+    if request.method == "POST":
+        form = HostForm(request.POST)
+        if form.is_valid():
+            models.Host.objects.create(
+                hostname=request.POST.get('hostname'),
+                mgmt_ip=request.POST.get('mgmt_ip'),
+                vendor=request.POST.get('vendor'),
+                model=request.POST.get('model'),
+                device_username=request.POST.get('device_username'),
+                device_password=request.POST.get('device_password'),
+                auth_type=request.POST.get('auth_type'),
+            ).save()
+            return redirect(reverse('homepage'))
+    return render(request, 'ztp/create_host.html', {'form': form})
+
+
+def edit_host_view(request, id):
+    obj = models.Host.objects.get(id=id)
+    form = HostForm(initial=obj.__dict__)
+    if request.method == "POST":
+        form = HostForm(request.POST)        
+        if form.is_valid():
+            user_data = form.cleaned_data
+            print(user_data)
+            obj.hostname = user_data['hostname']
+            obj.mgmt_ip = user_data['mgmt_ip']
+            obj.vendor = user_data['vendor']
+            obj.model = user_data['model']
+            obj.device_username = user_data['device_username']
+            obj.device_password = user_data['device_password']
+            obj.auth_type = user_data['auth_type']
+            obj.save()
+            return redirect(reverse('homepage'))
+    return render(request, 'ztp/edit_host.html', {'form': form})
