@@ -55,7 +55,7 @@ class BGPNetwork(models.Model):
     bgp = models.ForeignKey(BGP, on_delete=models.CASCADE, related_name='host_bgp_networks')
 
     def __str__(self):
-        return f"BGPNetwork: {self.ip_address}"
+        return f"BGPNetwork: {self.subnet}"
     
 
 class Interface(models.Model):

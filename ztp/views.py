@@ -8,7 +8,7 @@ from . import models
 
 # Create your views here.
 
-from .forms import SCPServerForm, DHCPServerForm, HostForm    # New import HostForm
+from .forms import SCPServerForm, DHCPServerForm, HostForm, AutomationForm    # New import HostForm
 
 
 def create_scp_server_view(request):
@@ -119,3 +119,8 @@ def delete_host_view(request, id):
     obj = models.Host.objects.get(id=id)
     obj.delete()
     return render(redirect(reverse('list_hosts')))
+
+
+def automation_view(request):
+    form = AutomationForm()
+    return render(request, 'ztp/automation.html', {'form': form})
