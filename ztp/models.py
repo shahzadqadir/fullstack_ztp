@@ -20,7 +20,7 @@ class SCPServer(models.Model):
     base_dir = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return f"SCPServer: {self.ipadd_address}"
+        return f"SCPServer: {self.ip_address}"
 
 
 class DHCPServer(models.Model):
@@ -30,7 +30,7 @@ class DHCPServer(models.Model):
     option67 = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"DHCPServer: {self.ipadd_address}"
+        return f"DHCPServer: {self.ip_address}"
 
 
 class BGP(models.Model):
@@ -46,7 +46,7 @@ class BGPNeighbor(models.Model):
     bgp = models.ForeignKey(BGP, on_delete=models.CASCADE, related_name='host_bgp_neighbors')
 
     def __str__(self):
-        return f"BGPNeighbor: {self.ipadd_address}"
+        return f"BGPNeighbor: {self.ip_address}"
     
 
 class BGPNetwork(models.Model):
@@ -55,7 +55,7 @@ class BGPNetwork(models.Model):
     bgp = models.ForeignKey(BGP, on_delete=models.CASCADE, related_name='host_bgp_networks')
 
     def __str__(self):
-        return f"BGPNetwork: {self.ipadd_address}"
+        return f"BGPNetwork: {self.ip_address}"
     
 
 class Interface(models.Model):
@@ -67,7 +67,7 @@ class Interface(models.Model):
     host = models.ForeignKey(Host, on_delete=models.CASCADE, related_name='host_interfaces')
 
     def __str__(self):
-        return f"Interface: {self.ipadd_address}"  
+        return f"Interface: {self.ip_address}"  
 
 
 class StaticRoute(models.Model):
