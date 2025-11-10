@@ -14,5 +14,6 @@ urlpatterns = [
     path('edit_dhcp_server/<int:id>/', views.edit_dhcp_server_view, name='edit_dhcp_server'),
     path('delete_dhcp_server/<int:id>/', views.delete_dhcp_server_view, name='delete_dhcp_server'),
     path('create_host/', views.create_host_view, name='create_host'),
-    path('edit_host/<int:id>/', views.edit_host_view, name='edit_host'),   # NEW
+    path('edit_host/<int:id>/', views.edit_host_view, name='edit_host'),
+    path('list_hosts/', views.list_hosts_view, name='list_hosts'), # NEW
 ]
