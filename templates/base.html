@@ -29,8 +29,12 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'create_scp_server' %}">SCP Server - Add</a>
           <a class="dropdown-item" href="{% url 'list_scp_servers' %}">SCP Server - List</a>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'create_dhcp_server' %}">DHCP Server - Add</a>
           <a class="dropdown-item" href="{% url 'list_dhcp_servers' %}">DHCP Server - List</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'create_host' %}">Create Host - Add</a>
+          <a class="dropdown-item" href="{% url 'list_hosts' %}">List Hosts - List</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
