@@ -1,0 +1,35 @@
+<!-- ~/automation/fullstack_ztp/templates/ztp/list_hosts.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}List of Hosts{% endblock title %}
+
+{% block content %}
+
+  <div class="container mt-5">
+    <h4>List of Hosts</h4>
+    <table class="table">
+      <tr>
+        <th>Hostname</th>
+        <th>Management IP</th>
+        <th>Vendor</th>
+        <th>Model</th>
+        <th>Device Username</th>
+        <th>Device Password</th>
+        <th>Authentication Type</th>
+      </tr>
+   {% for host in hosts %}
+      <tr>
+        <td>{{ host.hostname }}</td>
+        <td>{{ host.mgmt_ip }}</td>
+        <td>{{ host.vendor }}</td>
+        <td>{{ host.model }}</td>
+        <td>{{ host.device_username }}</td>
+        <td>{{ host.device_password }}</td>
+        <td>{{ host.auth_type }}</td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
+
+{% endblock content %}

@@ -107,3 +107,8 @@ def edit_host_view(request, id):
             obj.save()
             return redirect(reverse('homepage'))
     return render(request, 'ztp/edit_host.html', {'form': form})
+
+
+def list_hosts_view(request):
+    hosts = models.Host.objects.all()
+    return render(request, 'ztp/list_hosts.html', {'hosts': hosts})
