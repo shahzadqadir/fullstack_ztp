@@ -88,3 +88,22 @@ def create_host_view(request):  # NEW
             ).save()
             return redirect(reverse('homepage'))
     return render(request, 'ztp/create_host.html', {'form': form})
+
+def edit_host_view(request, id):
+    obj = models.Host.objects.get(id=id)
+    form = HostForm(initial=obj.__dict__)
+    if request.method == "POST":
+        form = HostForm(request.POST)        
+        if form.is_valid():
+            user_data = form.cleaned_data
+            print(user_data)
+            obj.hostname = user_data['hostname']
+            obj.mgmt_ip = user_data['mgmt_ip']
+            obj.vendor = user_data['vendor']
+            obj.model = user_data['model']
+            obj.device_username = user_data['device_username']
+            obj.device_password = user_data['device_password']
+            obj.auth_type = user_data['auth_type']
+            obj.save()
+            return redirect(reverse('homepage'))
+    return render(request, 'ztp/edit_host.html', {'form': form})
