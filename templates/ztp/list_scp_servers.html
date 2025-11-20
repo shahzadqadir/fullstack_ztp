@@ -1,0 +1,29 @@
+<!-- ~/automation/fullstack_ztp/templates/ztp/list_scp_servers.html -->
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}List SCP Server{% endblock title %}
+
+{% block content %}
+
+  <div class="container mt-5">
+    <h4>List of SCP Servers</h4>
+    <table class="table">
+      <tr>
+        <th>Server IP</th>
+        <th>Base Dir</th>
+        <th>Operations</th>
+      </tr>
+   {% for server in scp_servers %}
+      <tr>
+        <td>{{ server.ip_address }}</td>
+        <td>{{ server.base_dir }}</td>
+        <td><a class="btn btn-warning" href="{% url 'edit_scp_server' server.id %}">Edit</a>
+          <a class="btn btn-danger" href="{% url 'delete_scp_server' server.id %}">Delete</a></td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
+
+{% endblock content %}

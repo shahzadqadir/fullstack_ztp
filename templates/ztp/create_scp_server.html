@@ -1,0 +1,21 @@
+<!-- ~/automation/fullstack_ztp/templates/ztp/create_scp_server.html -->
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create SCP Server{% endblock title %}
+
+{% block content %}
+
+  <div class="container mt-5">
+    <h4>Add a new SCP Server</h4>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button class="btn btn-primary" type="submit">
+        Create Server
+      </button>
+    </form>
+  </div>
+
+{% endblock content %}
