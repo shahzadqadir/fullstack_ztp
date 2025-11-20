@@ -4,8 +4,12 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.urls import reverse
 
-from .forms import SCPServerForm
 from . import models
+
+# Create your views here.
+
+from .forms import SCPServerForm, DHCPServerForm    # New import DHCPServerForm
+
 
 def create_scp_server_view(request):
     form = SCPServerForm()
@@ -16,11 +20,9 @@ def create_scp_server_view(request):
             return redirect(reverse('homepage'))
     return render(request, 'ztp/create_scp_server.html', {'form': form})
 
-
 def list_scp_servers_view(request):
     scp_servers = models.SCPServer.objects.all()
     return render(request, 'ztp/list_scp_servers.html', {'scp_servers': scp_servers})
-
 
 def edit_scp_server_view(request, id):
     obj = models.SCPServer.objects.get(id=id)
@@ -33,7 +35,36 @@ def edit_scp_server_view(request, id):
     return render(request, 'ztp/edit_scp_server.html', {'form': form})
 
 
-def delete_scp_server_view(request, id):	# NEW
+def delete_scp_server_view(request, id):
     obj = models.SCPServer.objects.get(id=id)
     obj.delete()
     return redirect(reverse('list_scp_servers'))
+
+
+def create_dhcp_server_view(request):
+    form = DHCPServerForm()
+    if request.method == "POST":
+        form = DHCPServerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('homepage'))
+    return render(request, 'ztp/create_dhcp_server.html', {'form': form})
+
+def list_dhcp_servers_view(request):	# NEW
+    dhcp_servers = models.DHCPServer.objects.all()
+    return render(request, 'ztp/list_dhcp_servers.html', {'dhcp_servers': dhcp_servers})
+
+def edit_dhcp_server_view(request, id):
+    obj = models.DHCPServer.objects.get(id=id)
+    form = DHCPServerForm(instance=obj)
+    if request.method == "POST":
+        form = DHCPServerForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('list_dhcp_servers'))
+    return render(request, 'ztp/edit_dhcp_server.html', {'form': form})
+
+def delete_dhcp_server_view(request, id):
+    obj = models.DHCPServer.objects.get(id=id)
+    obj.delete()
+    return redirect(reverse('list_dhcp_servers'))

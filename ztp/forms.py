@@ -8,3 +8,9 @@ class SCPServerForm(forms.ModelForm):
     class Meta:
         model = models.SCPServer
         fields = '__all__'
+
+
+class DHCPServerForm(forms.ModelForm):
+    class Meta:
+        model = models.DHCPServer
+        fields = '__all__'

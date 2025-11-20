@@ -1,0 +1,33 @@
+<!-- ~/automation/fullstack_ztp/templates/ztp/list_dhcp_servers.html -->
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}DHCP SCP Server{% endblock title %}
+
+{% block content %}
+
+  <div class="container mt-5">
+    <h4>List of DHCP Servers</h4>
+    <table class="table">
+      <tr>
+        <th>Server IP</th>
+        <th>Subnet</th>
+        <th>Default Router</th>
+        <th>Option 67</th>
+        <th>Operations</th>
+      </tr>
+   {% for server in dhcp_servers %}
+      <tr>
+        <td>{{ server.ip_address }}</td>
+        <td>{{ server.subnet }}</td>
+        <td>{{ server.default_router }}</td>
+        <td>{{ server.option67 }}</td>
+        <td><a class="btn btn-warning" href="{% url 'edit_dhcp_server' server.id %}">Edit</a>
+          <a class="btn btn-danger" href="{% url 'delete_dhcp_server' server.id %}">Delete</a></td>
+      </tr>
+    {% endfor %}
+    </table>
+  </div>
+
+{% endblock content %}
