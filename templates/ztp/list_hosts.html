@@ -17,6 +17,7 @@
         <th>Device Username</th>
         <th>Device Password</th>
         <th>Authentication Type</th>
+        <th>Operations</th>
       </tr>
    {% for host in hosts %}
       <tr>
@@ -27,6 +28,8 @@
         <td>{{ host.device_username }}</td>
         <td>{{ host.device_password }}</td>
         <td>{{ host.auth_type }}</td>
+        <td><a class="btn btn-warning" href="{% url 'edit_host' host.id %}">Edit</a>
+          <a class="btn btn-danger" href="{% url 'delete_host' host.id %}">Delete</a></td>
       </tr>
     {% endfor %}
     </table>

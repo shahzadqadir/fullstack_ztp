@@ -112,3 +112,9 @@ def edit_host_view(request, id):
 def list_hosts_view(request):
     hosts = models.Host.objects.all()
     return render(request, 'ztp/list_hosts.html', {'hosts': hosts})
+
+
+def delete_host_view(request, id):
+    obj = models.Host.objects.get(id=id)
+    obj.delete()
+    return render(redirect(reverse('list_hosts')))
