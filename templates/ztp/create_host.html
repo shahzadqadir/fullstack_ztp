@@ -1,0 +1,21 @@
+<!-- ~/automation/fullstack_ztp/templates/ztp/create_host.html -->
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create Host{% endblock title %}
+
+{% block content %}
+
+  <div class="container mt-5">
+    <h4>Add a new Host</h4>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button class="btn btn-primary" type="submit">
+        Create Host
+      </button>
+    </form>
+  </div>
+
+{% endblock content %}
