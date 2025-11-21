@@ -1,0 +1,21 @@
+<!-- ~/automation/fullstack_ztp/templates/ztp/automation.html -->
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Automate ZTP{% endblock title %}
+
+{% block content %}
+
+  <div class="container mt-5">
+    <h4>Automate Zero Touch Provisioning (ZTP)</h4>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button class="btn btn-warning" type="submit">
+        Generate Configs & Push to SCP
+      </button>
+    </form>
+  </div>
+
+{% endblock content %}

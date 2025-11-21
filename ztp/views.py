@@ -5,10 +5,11 @@ from django.shortcuts import redirect
 from django.urls import reverse
 
 from . import models
+from .utility_functions import create_host_file, create_playbook, run_playbook, update_inventory
 
 # Create your views here.
 
-from .forms import SCPServerForm, DHCPServerForm, HostForm    # New import HostForm
+from .forms import SCPServerForm, DHCPServerForm, HostForm, AutomationForm
 
 
 def create_scp_server_view(request):
@@ -96,7 +97,6 @@ def edit_host_view(request, id):
         form = HostForm(request.POST)        
         if form.is_valid():
             user_data = form.cleaned_data
-            print(user_data)
             obj.hostname = user_data['hostname']
             obj.mgmt_ip = user_data['mgmt_ip']
             obj.vendor = user_data['vendor']
@@ -117,4 +117,29 @@ def list_hosts_view(request):
 def delete_host_view(request, id):
     obj = models.Host.objects.get(id=id)
     obj.delete()
-    return render(redirect(reverse('list_hosts')))
+    return redirect(reverse('list_hosts'))
+
+
+def automation_view(request):
+    form = AutomationForm()  
+
+    if request.method == "POST":
+        host = models.Host.objects.get(id=request.POST.get('hostname'))
+        ##### Step 1: Create Host File
+        create_host_file(host=host)
+        playbook_path = '/automation/ansible_automation/final_project_generate_ztp_configs.yml'
+        create_playbook(hostname=host.hostname, 
+                        tftp_server=models.DHCPServer.objects.first().ip_address,
+                        playbook_path=playbook_path
+                        )
+        ##### Step 2: Update Inventory File
+        update_inventory(host=host)
+        ##### Step 3: Run playbook
+        ###### Step 3.1: PLAY 1: Create Configurations for Cisco Devices
+        ###### Step 3.2: PLAY 2: Transfer device configs to TFTP Server
+        ###### Step 3.3: PLAY 3: Configure TFTP/DHCP Servers        
+        run_playbook(playbook_path=playbook_path, inventory_path="/automation/ztp/hosts")        
+
+        return render(request, 'ztp/success.html')
+
+    return render(request, 'ztp/automation.html', {'form': form})

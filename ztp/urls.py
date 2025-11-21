@@ -1,6 +1,7 @@
 # ~/automation/fullstack_ztp/ztp/urls.py
 
 from django.urls import path
+
 from . import views
 
 urlpatterns = [
@@ -15,5 +16,6 @@ urlpatterns = [
     path('create_host/', views.create_host_view, name='create_host'),
     path('edit_host/<int:id>/', views.edit_host_view, name='edit_host'),
     path('list_hosts/', views.list_hosts_view, name='list_hosts'),
-    path('delete_host/<int:id>/', views.delete_host_view, name='delete_host'),  # NEW
+    path('delete_host/<int:id>/', views.delete_host_view, name='delete_host'),
+    path('automation/', views.automation_view, name='automation'),
 ]

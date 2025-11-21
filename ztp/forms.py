@@ -15,7 +15,7 @@ class DHCPServerForm(forms.ModelForm):
         fields = '__all__'
 
 
-class HostForm(forms.Form): # NEW
+class HostForm(forms.Form):
     hostname = forms.CharField()
     mgmt_ip = forms.CharField()
     vendor = forms.ChoiceField(choices=[('cisco', 'Cisco'), 
@@ -25,3 +25,9 @@ class HostForm(forms.Form): # NEW
     device_username = forms.CharField()
     device_password = forms.CharField(widget=forms.PasswordInput())
     auth_type = forms.ChoiceField(choices=[('local', 'Local'),])
+
+
+class AutomationForm(forms.Form):   # NEW
+    hostname = forms.ModelChoiceField(queryset=models.Host.objects.all())
+    scp_server = forms.ModelChoiceField(queryset=models.SCPServer.objects.all())
+    dhcp_server = forms.ModelChoiceField(queryset=models.DHCPServer.objects.all())
