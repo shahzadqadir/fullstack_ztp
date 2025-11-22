@@ -121,13 +121,13 @@ def delete_host_view(request, id):
 
 
 def automation_view(request):
-    form = AutomationForm()  
+    form = AutomationForm()    
 
     if request.method == "POST":
         host = models.Host.objects.get(id=request.POST.get('hostname'))
         ##### Step 1: Create Host File
         create_host_file(host=host)
-        playbook_path = '/automation/ansible_automation/final_project_generate_ztp_configs.yml'
+        playbook_path = '/automation/ztp/final_project_generate_ztp_configs.yml'
         create_playbook(hostname=host.hostname, 
                         tftp_server=models.DHCPServer.objects.first().ip_address,
                         playbook_path=playbook_path
@@ -138,8 +138,8 @@ def automation_view(request):
         ###### Step 3.1: PLAY 1: Create Configurations for Cisco Devices
         ###### Step 3.2: PLAY 2: Transfer device configs to TFTP Server
         ###### Step 3.3: PLAY 3: Configure TFTP/DHCP Servers        
-        run_playbook(playbook_path=playbook_path, inventory_path="/automation/ztp/hosts")        
+        response = run_playbook(playbook_path=playbook_path, inventory_path='/automation/ztp/hosts')
+        print(response)       
 
         return render(request, 'ztp/success.html')
-
     return render(request, 'ztp/automation.html', {'form': form})

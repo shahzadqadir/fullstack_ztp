@@ -5,7 +5,7 @@ import os
 from django.http import JsonResponse
 
 def create_host_file(host):
-    file_path = f"/automation/ansible_automation/host_vars/{host.hostname}.yml"
+    file_path = f"/automation/ztp/host_vars/{host.hostname}.yml"
     try:
         with open(file_path, 'w') as file:
             file.write(f"hostname: {host.hostname}\n")
@@ -58,7 +58,7 @@ def create_host_file(host):
 
 def update_inventory(host):
     if os.path.exists('/automation/ztp/hosts'):
-        with open('/automation/ansible_automation/hosts', 'a') as file:
+        with open('/automation/ztp/hosts', 'a') as file:
             file.write(f"\n{host.hostname}  ansible_connection=local")
 
 
@@ -74,12 +74,12 @@ def create_playbook(hostname, tftp_server, playbook_path):
 
             file.write(f"    - name: Generate Device Configs\n")
             file.write(f"      template:\n")
-            file.write(f"        src: templates/cisco_device_template.j2\n")
+            file.write(f"        src: templates/ztp_host.j2\n")
             file.write(f"        dest: config_files/{hostname}.cfg\n")
 
             file.write(f"# PLAY 2\n")
             file.write(f"- name: Transfer device configs to TFTP Server\n")
-            file.write(f"  hosts: tftpserver\n")
+            file.write(f"  hosts: r1\n")
             file.write(f"  gather_facts: no\n")
 
             file.write(f"  tasks:\n")
@@ -88,7 +88,7 @@ def create_playbook(hostname, tftp_server, playbook_path):
 
             file.write(f"# PLAY 3\n")
             file.write(f"- name: Configure TFTP/DHCP Servers\n")
-            file.write(f"  hosts: tftpserver\n")
+            file.write(f"  hosts: r1\n")
             file.write(f"  gather_facts: no\n")
 
             file.write(f"  tasks:\n")
@@ -100,7 +100,7 @@ def create_playbook(hostname, tftp_server, playbook_path):
             file.write(f"          - default-router 10.10.99.254\n")
             file.write(f"          - option 150 ip 10.10.99.254\n")
             file.write(f"          - option 67 ascii {hostname}.cfg\n")
-            file.write(f"        parents: ip dhcp pool CONFIG-POOL\n")
+            file.write(f"        parents: ip dhcp pool MGMT-POOL\n")
     
             file.write(f"    - name: Update TFTP to config file\n")
             file.write(f"      cisco.ios.ios_config:\n")
